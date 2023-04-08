@@ -79,20 +79,13 @@ namespace MvcCodeFlowClientManual.Controllers
                     //return View("ApiCallService", (object)("QBO API call Successful!! Response: " + output));
 
                     QueryService<Account> querySvc = new QueryService<Account>(serviceContext);
-                    List<Account> accounts = querySvc.ExecuteIdsQuery("SELECT * FROM Account").ToList();
-
-                    foreach (Account account in accounts)
-                    {
-                        string name = account?.Name;
-                        string domain = account?.domain;
-                        string classification = account?.Classification.ToString();
-                        string accountsubtype = account?.AccountSubType.ToString();
-                        string accounttype =    account?.AccountType.ToString();
-                        string currentbalance = account?.CurrentBalance.ToString();
-                    }
+                    //List<Account> accountList = new List<Account>();
+                    //accountList = querySvc.ExecuteIdsQuery("SELECT * FROM Account").ToList();
+                    var accountList = querySvc.ExecuteIdsQuery("SELECT * FROM Account").ToList();
 
                     //string output = "Customer Name: " + customers.givenName + " Customer Address: " + customer.C + ", " + customer.CurrencyRef.name + ", " + customer.BillAddr.PostalCode + " " + customer.domain;
-                    return View("ApiCallService", (object)("QBO API call Successful!! Response: " + accounts));
+                    //return View("ApiCallService", (object)("QBO API call Successful!! Response: " + accountList));
+                    return View(accountList);
 
                 }
                 catch (Exception ex)
