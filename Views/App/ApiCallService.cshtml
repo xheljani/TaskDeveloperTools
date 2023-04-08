@@ -1,11 +1,37 @@
-﻿@model string
+﻿@using Intuit.Ipp.Data
+
+@model List<Account>
 @{
     ViewBag.Title = "API Call Response";
 }
 
 <h2>API Call Response</h2>
 
-<p style="word-wrap: break-word;">@Model</p>
+@*<p style="word-wrap: break-word;">@Model</p>*@
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Classification</th>
+            <th>AccountSubType</th>
+            <th>AccountType</th>
+            <th>CurrentBalance</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var account in @Model)
+        {
+            <tr>
+                <td>@account.Name</td>
+                <td>@account.Classification.ToString()</td>
+                <td>@account.AccountSubType.ToString()</td>
+                <td>@account.AccountType.ToString()</td>
+                <td>@account.CurrentBalance.ToString()</td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 
 
