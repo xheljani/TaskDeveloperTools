@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Task Developer Tools";
+}
+
+<div class="jumbotron">
+    <h1>Task Developer Tools Application</h1>
+    <h2>Simple program that lists all QuickBooks Accounts list on a FlexGrid.</h2>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        @using (Html.BeginForm("InitiateAuth", "App", FormMethod.Post))
+        {
+
+            <div><input type="submit" name="submitButton" value="Connect to QuickBooks"/></div>
+            <br/>
+          
+            <br/>
+        }
+</div>
+</div>
