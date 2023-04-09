@@ -50,6 +50,9 @@
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="C1.Web.Mvc, Version=4.8.20231.344, Culture=neutral, PublicKeyToken=9b75583953471eea, processorArchitecture=MSIL">
+      <HintPath>packages\C1.Web.Mvc.4.8.20231.344\lib\net48\C1.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="DevDefined.OAuth, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a3261f5b4697e67d, processorArchitecture=MSIL">
       <HintPath>packages\DevDefined.OAuth.0.2\lib\DevDefined.OAuth.dll</HintPath>
     </Reference>
@@ -204,11 +207,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CallbackController.cs" />
     <Compile Include="Controllers\AppController.cs" />
+    <Compile Include="Controllers\FlexGridController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ApiCallServiceViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -242,6 +247,8 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <EmbeddedResource Include="MvcCodeFlowClientManual.gclicx" />
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -292,6 +299,9 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\App\ApiCallService2.cshtml" />
+    <Content Include="Views\_ViewImports.cshtml" />
+    <Content Include="Views\FlexGrid\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
