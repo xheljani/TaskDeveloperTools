@@ -13,6 +13,8 @@ using Intuit.Ipp.Security;
 using System.Linq;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using MvcCodeFlowClientManual.ViewModels;
+using C1.Web.Mvc.Grid;
 
 namespace MvcCodeFlowClientManual.Controllers
 {
@@ -34,6 +36,21 @@ namespace MvcCodeFlowClientManual.Controllers
             Session.Clear();
             Session.Abandon();
             Request.GetOwinContext().Authentication.SignOut("Cookies");
+            //var result = new ApiCallServiceViewModel();
+            //var temp = new List<AccountViewModel>() { };
+            //temp.Add(new AccountViewModel()
+            //{
+            //    Name = "Xhelo",
+            //    Id = "1",
+            //});
+            
+            //temp.Add(new AccountViewModel()
+            //{
+            //    Name = "Xhelo 2",
+            //    Id = "2",
+            //});
+
+            //result.MyAccounts = temp.AsEnumerable();
             return View();
         }
 
@@ -67,26 +84,30 @@ namespace MvcCodeFlowClientManual.Controllers
                     var principal = User as ClaimsPrincipal;
                     OAuth2RequestValidator oauthValidator = new OAuth2RequestValidator(principal.FindFirst("access_token").Value);
 
-                    // Create a ServiceContext with Auth tokens and realmId
                     ServiceContext serviceContext = new ServiceContext(realmId, IntuitServicesType.QBO, oauthValidator);
                     serviceContext.IppConfiguration.MinorVersion.Qbo = "23";
 
-                    // Create a QuickBooks QueryService using ServiceContext
-                    //QueryService<CompanyInfo> querySvc = new QueryService<CompanyInfo>(serviceContext);
-                    //CompanyInfo companyInfo = querySvc.ExecuteIdsQuery("SELECT * FROM CompanyInfo").FirstOrDefault();
-
-                    //string output = "Company Name: " + companyInfo.CompanyName + " Company Address: " + companyInfo.CompanyAddr.Line1 + ", " + companyInfo.CompanyAddr.City + ", " + companyInfo.CompanyAddr.Country + " " + companyInfo.CompanyAddr.PostalCode;
-                    //return View("ApiCallService", (object)("QBO API call Successful!! Response: " + output));
-
                     QueryService<Account> querySvc = new QueryService<Account>(serviceContext);
-                    //List<Account> accountList = new List<Account>();
-                    //accountList = querySvc.ExecuteIdsQuery("SELECT * FROM Account").ToList();
+                    
                     var accountList = querySvc.ExecuteIdsQuery("SELECT * FROM Account").ToList();
+                    var result = new ApiCallServiceViewModel();
+                    var temp = new List<AccountViewModel>() { };
+                    foreach (var item in accountList) 
+                    {
+                        temp.Add(new AccountViewModel()
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            Classification = item.Classification.ToString(),
+                            AccountSubType = item.AccountSubType,
+                            AccountType = item.AccountType.ToString(),
+                            CurrentBalance = item.CurrentBalance.ToString(),
+                            
+                        });
+                    }
 
-                    //string output = "Customer Name: " + customers.givenName + " Customer Address: " + customer.C + ", " + customer.CurrencyRef.name + ", " + customer.BillAddr.PostalCode + " " + customer.domain;
-                    //return View("ApiCallService", (object)("QBO API call Successful!! Response: " + accountList));
-                    return View(accountList);
-
+                    result.MyAccounts = temp.AsEnumerable();    
+                    return View(result);
                 }
                 catch (Exception ex)
                 {

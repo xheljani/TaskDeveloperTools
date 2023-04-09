@@ -1,37 +1,44 @@
-﻿@using Intuit.Ipp.Data
-
-@model List<Account>
-@{
+﻿@{
     ViewBag.Title = "API Call Response";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>API Call Response</h2>
+@using C1.Web.Mvc
+@using MvcCodeFlowClientManual.ViewModels
 
-@*<p style="word-wrap: break-word;">@Model</p>*@
+@model ApiCallServiceViewModel
 
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Classification</th>
-            <th>AccountSubType</th>
-            <th>AccountType</th>
-            <th>CurrentBalance</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var account in @Model)
-        {
-            <tr>
-                <td>@account.Name</td>
-                <td>@account.Classification.ToString()</td>
-                <td>@account.AccountSubType.ToString()</td>
-                <td>@account.AccountType.ToString()</td>
-                <td>@account.CurrentBalance.ToString()</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<h2>API Call Response - All QuickBooks Accounts</h2>
+<style type="text/css">
+    .grid {
+        height: 500px;
+        border: 2px solid #e0e0e0;
+        font-family: Cambria;
+        font-weight: bold;
+    }
+</style>
 
-
-
+<div class="row">
+    <div class="col-12">
+        <p id="theSearch" style="width:300px;"></p>
+    </div>
+    <div class="col-12">
+        @(Html.C1().FlexGrid<AccountViewModel>()
+                    .Bind(bl => bl.Bind(Model.MyAccounts))
+                    .AutoGenerateColumns(false)
+                    .IsReadOnly(true)
+                    .Height("800px")
+                    .OrderBy("Id")
+                    .Columns(bl =>
+                    {
+                        bl.Add(cb => cb.Binding("Id").Width("50"));
+                        bl.Add(cb => cb.Binding("Name").Width("305"));
+                        bl.Add(cb => cb.Binding("Classification"));
+                        bl.Add(cb => cb.Binding("AccountSubType").Width("255"));
+                        bl.Add(cb => cb.Binding("AccountType").Width("185"));
+                        bl.Add(cb => cb.Binding("CurrentBalance"));
+                    })
+                    .Id("flexgrid"))
+    </div>
+</div>
+}
